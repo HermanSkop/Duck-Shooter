@@ -18,12 +18,12 @@ public class ExitScore implements Serializable {
 
     @Override
     public String toString() {
-        return "ExitScore{" +
-                "name='" + name + '\'' +
-                ", score=" + score +
-                ", time=" + time +
-                ", difflvl=" + difflvl +
-                ", rank=" + rank +
-                '}';
+        return "name: " + name + '\'' +
+                ", score: " + score +
+                ", time: " + time +
+                ", difflvl: " + difflvl +
+                ", rank: " + rank;
     }
+
+
 }

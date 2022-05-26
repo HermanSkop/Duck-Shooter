@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 public class RedRightDuckMover extends RightDuckMover{
     RedRightDuckMover(RunGame currGame){
         super(currGame);
-        ImageIcon icon = new ImageIcon("rduck.pngRunGame currGame");
+        ImageIcon icon = new ImageIcon("rduck.png");
         duck.setIcon(icon);
         hp = 16;
     }

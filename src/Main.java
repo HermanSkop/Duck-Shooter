@@ -22,19 +22,24 @@ public class Main {
             @Override
             public void actionPerformed(ActionEvent e) {
                 difflvl.dispose();
-                new RunGame(1);
+                main.setVisible(false);
+                new RunGame(1, main);
             }
         });
         mid.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               difflvl.dispose();new RunGame(3);
+               difflvl.dispose();
+                main.setVisible(false);
+               new RunGame(3, main);
             }
         });
         hard.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                difflvl.dispose();new RunGame(9);
+                main.setVisible(false);
+                difflvl.dispose();
+                new RunGame(9, main);
             }
         });
 
@@ -49,6 +54,15 @@ public class Main {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Container a = new GetFromFile().getCont();
+                a.sort();
+                ScoreListModel tempList = new ScoreListModel(a.scoreList);
+                JList scoreList = new JList(tempList);
+                JScrollPane tempScrollPane = new JScrollPane(scoreList);
+                JFrame scoreFrame = new JFrame("Score Table");
+                scoreFrame.add(tempScrollPane);
+                scoreFrame.setMinimumSize(new Dimension(150,300));
+                scoreFrame.pack();
+                scoreFrame.setVisible(true);
                 if(a.scoreList!=null)for(Object i:a.scoreList) System.out.println(i);
             }
         });

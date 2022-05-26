@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class LeftDuckMover extends Duck{
-        int x = 1500;
+        int x = currGame.game.getWidth()+50;
     LeftDuckMover(RunGame currGame){
         super(currGame);
         ImageIcon icon = new ImageIcon("duck-l.png");
@@ -19,11 +19,10 @@ public class LeftDuckMover extends Duck{
                 try {
                     try {
                         sleep(64/currGame.difflvl);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+
+                    } catch (InterruptedException e) {}
                 } catch (Exception e) {
-                    System.out.println("sleep interrupted");
+                   // System.out.println("sleep interrupted");
                 }
                 if(x==-50){
                     reduceHp(hp);

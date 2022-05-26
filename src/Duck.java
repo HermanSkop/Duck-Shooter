@@ -53,13 +53,15 @@ public class Duck extends Thread{
         this.interrupt();
     }
     void reduceHp(int amount){
+        System.out.println("hp reduced from " +currGame.hpField.getText()+" by "+amount);
         currGame.hpField.setText(String.valueOf( Integer.parseInt(currGame.hpField.getText())-amount));
         if(Integer.parseInt(currGame.hpField.getText())<=0){
             finishGame();
         }
     }
     void finishGame(){
-        currGame.finishGame();
+        if(currGame.game.isVisible()) currGame.finishGame();
+        else System.out.println("here");
     }
 
 }

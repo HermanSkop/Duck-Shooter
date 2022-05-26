@@ -22,5 +22,4 @@ public class TimeCounter extends Thread{
             timer.setText(Integer.toString(time));
         }
     }
-
 }
