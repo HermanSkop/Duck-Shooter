@@ -1,14 +1,13 @@
 import java.io.*;
 
 public class SaveToFile {
+    SaveToFile(){}
     SaveToFile(ExitScore obj) {
         Container cont = null;
         try {
             cont = new GetFromFile().getCont();
             if(cont!=null) {
                 cont.scoreList.add(obj);
-                for (Object i : cont.scoreList) System.out.println(i);
-
                 FileOutputStream fos = new FileOutputStream("stat_table");
                 ObjectOutputStream oos = new ObjectOutputStream(fos);
                 oos.writeObject(cont);
@@ -26,5 +25,25 @@ public class SaveToFile {
         cont.scoreList.add(obj);
         oos.writeObject(cont);
         oos.close();
+    }
+    void savePointsToFile(int points) {
+        int summ = 0;
+        try {
+            summ = new GetFromFile().getPoints()+points;
+            FileOutputStream fos = new FileOutputStream("points");
+            fos.write(summ);
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    void saveDmgToFile(int dmg) {
+        try {
+            FileOutputStream fos = new FileOutputStream("dmg");
+            fos.write(dmg);
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -9,6 +9,6 @@ public class PinkLeftDuckMover extends LeftDuckMover{
         super(currGame);
         ImageIcon icon = new ImageIcon("piduck-l.png");
         duck.setIcon(icon);
-        hp = 4;
+        hp = 4*currGame.duckHpMultilplyer;
     }
 }

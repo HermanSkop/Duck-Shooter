@@ -3,9 +3,6 @@ import java.io.*;
 public class GetFromFile {
     GetFromFile() {}
 
-    GetFromFile(ExitScore obj) throws IOException {
-    }
-
     Container getCont() {
         try {
         FileInputStream fis = new FileInputStream("stat_table");
@@ -13,6 +10,22 @@ public class GetFromFile {
         return (Container) ois.readObject();
         } catch (IOException | ClassNotFoundException e) {
             return null;
+        }
+    }
+    int getPoints(){
+        try {
+            FileInputStream fis = new FileInputStream("points");
+            return fis.read();
+        } catch (IOException e) {
+            return 0;
+        }
+    }
+    int getDmg(){
+        try {
+            FileInputStream fis = new FileInputStream("dmg");
+            return fis.read();
+        } catch (IOException e) {
+            return 0;
         }
     }
 }

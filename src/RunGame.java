@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class RunGame extends Thread {
+    int duckHpMultilplyer = 1;
     JFrame game;
     int startDifflvl;
     int difflvl;
@@ -11,6 +12,7 @@ public class RunGame extends Thread {
     JTextField hpField;
     JTextField PointsField;
     JTextField timeField;
+    JTextField weaponField;
     JFrame main;
     TimeCounter timeCounter;
 
@@ -24,18 +26,19 @@ public class RunGame extends Thread {
         difflvl = difficulty;
         startDifflvl = difficulty==1?difflvl:difflvl==3?2:3;
 
-
-
-
         game = new JFrame("Hunt them Down!");
         PointsField = new JTextField("0");
         PointsField.setPreferredSize(new Dimension(20,20));
         timeField = new JTextField("0");
-        hpField = new JTextField("60");
-        hpField.setPreferredSize(new Dimension(20,20));
+
+        weaponField = new JTextField(String.valueOf(new GetFromFile().getDmg()));
+
+        hpField = new JTextField("100");
+        hpField.setPreferredSize(new Dimension(30,20));
         JPanel pointPanel = new JPanel();
         JPanel timePanel = new JPanel();
         JPanel hpPanel = new JPanel();
+        JPanel weaponPanel = new JPanel();
 
         // implementing shortcut
         JTextField textField = new JTextField();
@@ -56,11 +59,17 @@ public class RunGame extends Thread {
         pointPanel.add(PointsField);
         pointPanel.setBounds(0, 0, 150, 30);
 
+        weaponPanel.add(new JLabel("LvL of weapon:"));
+        weaponPanel.add(weaponField);
+        weaponPanel.setBounds(game.getWidth() / 4, 0, 150, 100);
+
 
         PointsField.setEditable(false);
         hpField.setEditable(false);
+        weaponField.setEditable(false);
         timeField.setEditable(false);
         game.setLayout(null);
+        game.add(weaponPanel);
         game.add(pointPanel);
         game.add(timePanel);
         game.add(hpPanel);
@@ -85,7 +94,6 @@ public class RunGame extends Thread {
             spawnDuck();
             spawnDuck();
             difflvl++;
-            System.out.println(difflvl);
         }
         while (game.isVisible() && difflvl >= 23) {
             try {
@@ -93,9 +101,9 @@ public class RunGame extends Thread {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
+            duckHpMultilplyer++;
             spawnHardDuck();
             spawnDuck();
-            System.out.println(difflvl);
         }
     }
 
@@ -148,6 +156,8 @@ public class RunGame extends Thread {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // actual saving process by ExitGame class
+                new SaveToFile().saveDmgToFile(Integer.parseInt(weaponField.getText()));
+                new SaveToFile().savePointsToFile(Integer.parseInt(PointsField.getText()));
                 new SaveToFile(new ExitScore(getUserName(), Integer.parseInt(PointsField.getText()), Integer.parseInt(timeField.getText()), startDifflvl));
                 userName.dispose();
             }

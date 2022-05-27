@@ -8,6 +8,6 @@ public class PurpleRightDuckMover extends RightDuckMover{
         super(currGame);
         ImageIcon icon = new ImageIcon("pduck.png");
         duck.setIcon(icon);
-        hp = 8;
+        hp = 8*currGame.duckHpMultilplyer;
     }
 }

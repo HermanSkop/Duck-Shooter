@@ -14,6 +14,7 @@ public class Duck extends Thread{
     Duck(RunGame currGame){
         this.currGame = currGame;
         // adding duck to the main window;
+        hp*=currGame.duckHpMultilplyer;
         duck = new JButton();
         panel = new JPanel();
         duck.setContentAreaFilled(false);
@@ -29,14 +30,11 @@ public class Duck extends Thread{
         currGame.game.pack();
 
         // hit
-        duck.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                hp-=1;
-                if(hp<=0){
-                    currGame.PointsField.setText(String.valueOf( Integer.parseInt(currGame.PointsField.getText())+1));
-                    removeDuck();
-                }
+        duck.addActionListener(e -> {
+            hp-=Integer.parseInt(currGame.weaponField.getText());
+            if(hp<=0){
+                currGame.PointsField.setText(String.valueOf( Integer.parseInt(currGame.PointsField.getText())+1));
+                removeDuck();
             }
         });
         start();
@@ -53,8 +51,7 @@ public class Duck extends Thread{
         this.interrupt();
     }
     void reduceHp(int amount){
-        System.out.println("hp reduced from " +currGame.hpField.getText()+" by "+amount);
-        currGame.hpField.setText(String.valueOf( Integer.parseInt(currGame.hpField.getText())-amount));
+        if(amount>0) currGame.hpField.setText(String.valueOf( Integer.parseInt(currGame.hpField.getText())-amount));
         if(Integer.parseInt(currGame.hpField.getText())<=0){
             finishGame();
         }

@@ -21,7 +21,6 @@ public class RightDuckMover extends Duck{
                     sleep(64/currGame.difflvl);
                 } catch (InterruptedException e) {}
             } catch (Exception e) {
-                //System.out.println("sleep interrupted");
             }
             if(x==currGame.game.getWidth()){
                 reduceHp(hp);

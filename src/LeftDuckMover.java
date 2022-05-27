@@ -21,9 +21,7 @@ public class LeftDuckMover extends Duck{
                         sleep(64/currGame.difflvl);
 
                     } catch (InterruptedException e) {}
-                } catch (Exception e) {
-                   // System.out.println("sleep interrupted");
-                }
+                } catch (Exception e) {}
                 if(x==-50){
                     reduceHp(hp);
                     removeDuck();
