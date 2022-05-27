@@ -10,7 +10,7 @@ public class Main {
         JButton ng = new JButton("New Game");
         JButton hs = new JButton("High Scores");
         JButton exit = new JButton("Exit");
-
+        final JFrame[] scoreFrame = {new JFrame("Score Table")};
         // creating window for difficulty level
         JFrame difflvl = new JFrame("Choose difficulty of the game");
         JButton ez = new JButton("Easy");
@@ -54,16 +54,23 @@ public class Main {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Container a = new GetFromFile().getCont();
-                a.sort();
-                ScoreListModel tempList = new ScoreListModel(a.scoreList);
+                ScoreListModel tempList;
+                try {
+                    tempList = new ScoreListModel(a.scoreList);
+                }
+                catch (NullPointerException c){
+                    a = new Container();
+                    tempList = new ScoreListModel(a.scoreList);
+                }
                 JList scoreList = new JList(tempList);
-                JScrollPane tempScrollPane = new JScrollPane(scoreList);
-                JFrame scoreFrame = new JFrame("Score Table");
-                scoreFrame.add(tempScrollPane);
-                scoreFrame.setMinimumSize(new Dimension(150,300));
-                scoreFrame.pack();
-                scoreFrame.setVisible(true);
-                if(a.scoreList!=null)for(Object i:a.scoreList) System.out.println(i);
+                if(!scoreFrame[0].isVisible()) {
+                    JScrollPane tempScrollPane = new JScrollPane(scoreList);
+                    scoreFrame[0] = new JFrame("Score Table");
+                    scoreFrame[0].add(tempScrollPane);
+                    scoreFrame[0].setMinimumSize(new Dimension(150, 300));
+                    scoreFrame[0].pack();
+                    scoreFrame[0].setVisible(true);
+                }
             }
         });
         exit.addActionListener(new ActionListener() {
