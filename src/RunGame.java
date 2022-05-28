@@ -1,7 +1,12 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.LinkedList;
 
 public class RunGame extends Thread {
     int duckHpMultilplyer = 1;
@@ -11,11 +16,13 @@ public class RunGame extends Thread {
     ExitShortcut listener;
     JTextField hpField;
     JTextField PointsField;
+    JButton tree1;
+    JButton tree2;
     JTextField timeField;
     JTextField weaponField;
     JFrame main;
     TimeCounter timeCounter;
-
+    JLayeredPane layeredPane;
 
     JFrame userName;
     JTextField userNameField;
@@ -40,6 +47,8 @@ public class RunGame extends Thread {
         JPanel hpPanel = new JPanel();
         JPanel weaponPanel = new JPanel();
 
+
+
         // implementing shortcut
         JTextField textField = new JTextField();
         listener = new ExitShortcut(this);
@@ -49,19 +58,66 @@ public class RunGame extends Thread {
         game.setMinimumSize(new Dimension(1500, 1000));
         timePanel.add(new JLabel("Time:"));
         timePanel.add(timeField);
-        timePanel.setBounds(game.getWidth() - 200, 0, 200, 30);
+        timePanel.setBounds(game.getWidth() - 200, 0, 100, 30);
+        timePanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
         hpPanel.add(new JLabel("Hp left:"));
         hpPanel.add(hpField);
-        hpPanel.setBounds(game.getWidth() / 2-50, 0, 130, 30);
+        hpPanel.setBounds(game.getWidth() / 2-50, 0, 100, 30);
+        hpPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
         pointPanel.add(new JLabel("Score:"));
         pointPanel.add(PointsField);
-        pointPanel.setBounds(0, 0, 150, 30);
+        pointPanel.setBounds(50, 0, 100, 30);
+        pointPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
         weaponPanel.add(new JLabel("LvL of weapon:"));
         weaponPanel.add(weaponField);
-        weaponPanel.setBounds(game.getWidth() / 4, 0, 150, 100);
+        weaponPanel.setBounds(game.getWidth() / 4, 0, 120, 30);
+        weaponPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+
+
+
+        layeredPane = new JLayeredPane();
+        layeredPane.setLayout(null);
+        try {
+            BufferedImage img = ImageIO.read(new File("treeA.png"));
+            tree1 = new JButton();
+            tree1.setIcon(new ImageIcon(img));
+            tree1.setBounds(300,game.getHeight()-700,260,465);
+            tree1.setContentAreaFilled(false);
+            tree1.setBorderPainted(false);
+            tree1.setFocusable(false);
+            layeredPane.add(tree1, new Integer(1));
+
+            if(startDifflvl>=2) {
+                JButton cloud = new JButton();
+                BufferedImage cloudIcon = ImageIO.read(new File("cloudA.png"));
+                cloud.setIcon(new ImageIcon(cloudIcon));
+                cloud.setBounds(0,0,300,200);
+                cloud.setFocusable(false);
+                cloud.setContentAreaFilled(false);
+                cloud.setBorderPainted(false);
+                new CloudMover(game, layeredPane,cloud);
+            }
+
+            if(startDifflvl==3) {
+                tree2 = new JButton();
+                tree2.setIcon(new ImageIcon(img));
+                tree2.setBounds(900,game.getHeight()-700,260,465);
+                tree2.setFocusable(false);
+                tree2.setContentAreaFilled(false);
+                tree2.setBorderPainted(false);
+                layeredPane.add(tree2, new Integer(1));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        layeredPane.add(pointPanel, new Integer(2));
+        layeredPane.add(timePanel, new Integer(2));
+        layeredPane.add(hpPanel, new Integer(2));
+        layeredPane.add(weaponPanel, new Integer(2));
+        layeredPane.setBounds(0,0,game.getWidth(), game.getHeight());
 
 
         PointsField.setEditable(false);
@@ -69,10 +125,7 @@ public class RunGame extends Thread {
         weaponField.setEditable(false);
         timeField.setEditable(false);
         game.setLayout(null);
-        game.add(weaponPanel);
-        game.add(pointPanel);
-        game.add(timePanel);
-        game.add(hpPanel);
+        game.add(layeredPane);
         game.pack();
         game.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         game.setLocationRelativeTo(null);

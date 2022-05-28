@@ -22,32 +22,36 @@ public class Duck extends Thread{
         duck.setPreferredSize(new Dimension(50,50));
         duck.setLocation(0,0);
 
+
         currGame.game.setLayout(null);
         y = (int) (Math.random()*500+100);
         panel.setBounds(x, y, 50, 50);
-        currGame.game.add(panel);
+        panel.setOpaque(false);
         panel.add(duck);
+        currGame.layeredPane.add(panel, new Integer(0));
+
         currGame.game.pack();
 
         // hit
         duck.addActionListener(e -> {
-            hp-=Integer.parseInt(currGame.weaponField.getText());
-            if(hp<=0){
-                currGame.PointsField.setText(String.valueOf( Integer.parseInt(currGame.PointsField.getText())+1));
-                removeDuck();
+            if(hp>0) {
+                hp -= Integer.parseInt(currGame.weaponField.getText());
+                if (hp <= 0) {
+                    currGame.PointsField.setText(String.valueOf(Integer.parseInt(currGame.PointsField.getText()) + 1));
+                    removeDuck(panel);
+                }
             }
         });
         start();
     }
-    void removeDuck(){
+    void removeDuck(JPanel theDuck){
         duck.setIcon(null);
         try {
             sleep(100);
         } catch (InterruptedException ex) {
             throw new RuntimeException(ex);
         }
-        currGame.game.remove(duck);
-        currGame.game.remove(panel);
+        currGame.layeredPane.remove(theDuck);
         this.interrupt();
     }
     void reduceHp(int amount){
@@ -58,7 +62,6 @@ public class Duck extends Thread{
     }
     void finishGame(){
         if(currGame.game.isVisible()) currGame.finishGame();
-        else System.out.println("here");
     }
 
 }

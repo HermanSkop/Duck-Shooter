@@ -24,7 +24,7 @@ public class RightDuckMover extends Duck{
             }
             if(x==currGame.game.getWidth()){
                 reduceHp(hp);
-                removeDuck();
+                removeDuck(panel);
             };
         }
     }

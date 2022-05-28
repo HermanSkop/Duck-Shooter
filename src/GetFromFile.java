@@ -25,7 +25,7 @@ public class GetFromFile {
             FileInputStream fis = new FileInputStream("dmg");
             return fis.read();
         } catch (IOException e) {
-            return 0;
+            return 1;
         }
     }
 }

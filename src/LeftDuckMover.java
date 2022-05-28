@@ -24,7 +24,7 @@ public class LeftDuckMover extends Duck{
                 } catch (Exception e) {}
                 if(x==-50){
                     reduceHp(hp);
-                    removeDuck();
+                    removeDuck(panel);
                 };
             }
         }
