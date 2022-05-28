@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 public class Main {
     public static void main(String[] args){
+
         JFrame main = new JFrame("Menu");
         JButton ng = new JButton("New Game");
         JButton hs = new JButton("High Scores");
